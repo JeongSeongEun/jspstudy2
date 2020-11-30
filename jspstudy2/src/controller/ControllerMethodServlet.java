@@ -29,6 +29,7 @@ public class ControllerMethodServlet extends HttpServlet {
 @Override
 public void init(ServletConfig config) throws ServletException{
 	FileInputStream f=null;
+	//props: method.properties
 	String props=config.getInitParameter("properties");
 	try {
 		f=new FileInputStream(config.getServletContext().getRealPath("/")+"WEB-INF/"+props);
@@ -45,8 +46,12 @@ public void init(ServletConfig config) throws ServletException{
 		String command=null;
 		try {
 			command=request.getRequestURI().substring(request.getContextPath().length());
+			//methodName= hello
 			String methodName=pr.getProperty(command);
+			//action.getClass():BoardAction의 Class의 정보
+			//method: 메서드의 이름이 hello, 파라미터 정보가 request, response인 메서드 리턴
 			Method method=action.getClass().getMethod(methodName, paramType);
+			//invoke: 메서드 호출. 실행
 			forward=(ActionForward)method.invoke(action, paramsObjs);
 			} catch (NullPointerException e) {
 			forward=new ActionForward();
