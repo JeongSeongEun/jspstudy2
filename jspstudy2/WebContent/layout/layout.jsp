@@ -25,7 +25,7 @@
 	</c:if></span></td></tr>
 	<tr><td width="15%" style="vertical-align: top">
 	<a href="${path }/model2/member/main.me">회원관리</a><br>
-	<a href="${path }/model2/member/list.do">게시판</a><br>
+	<a href="${path }/model2/board/list.do">게시판</a><br>
 	<a href="${path }/model2/member/chatform.do">채팅</a><br>
 	</td><td colspan="2" style="text-align: left; vertical-align: top">
 	<decorator:body/></td></tr>
