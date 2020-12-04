@@ -27,7 +27,7 @@ public class PasswordAction extends UserLoginAction {
 		} else {
 			opener = false;
 			closer = false;
-			msg = "비밀번호 오류입니다. 확이나세요.";
+			msg = "비밀번호 오류입니다. 확인하세요.";
 			url = "passwordForm.me";
 		}
 		request.setAttribute("msg", msg);

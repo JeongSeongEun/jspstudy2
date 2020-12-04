@@ -30,7 +30,7 @@ function win_passchg() {
 	open("passwordForm.me","",op);
 }
 function win_upload() {
-	let op="width=500, height=400, left=50, top=150";
+	let op="width=500, height=600, left=50, top=150";
 	open("pictureForm.me","",op);
 }
 </script>

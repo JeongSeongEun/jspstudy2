@@ -39,23 +39,23 @@
 		<table>
 			<caption>게시판 글쓰기</caption>
 			<tr>
-				<td>글쓴이</td>
+				<th>글쓴이</th>
 				<td><input type="text" name="name"></td>
 			</tr>
 			<tr>
-				<td>비밀번호</td>
+				<th>비밀번호</th>
 				<td><input type="password" name="pass"></td>
 			</tr>
 			<tr>
-				<td>제목</td>
+				<th>제목</th>
 				<td><input type="text" name="subject"></td>
 			</tr>
 			<tr>
-				<td>내용</td>
+				<th>내용</th>
 				<td><textarea rows="15" name="content"></textarea></td>
 			</tr>
 			<tr>
-				<td>첨부파일</td>
+				<th>첨부파일</th>
 				<td><input type="file" name="file1"></td>
 			</tr>
 			<tr>

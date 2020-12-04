@@ -45,10 +45,6 @@
 					<a href="deleteForm.me?id=${mem.id }">[탈퇴]</a>
 				</c:if></td>
 		</tr>
-		<tr>
-			<td colspan="3"><input type="button"
-				onclick="location.href='main.me'" value="메인으로 돌아가기"></td>
-		</tr>
 	</table>
 </body>
 </html>
