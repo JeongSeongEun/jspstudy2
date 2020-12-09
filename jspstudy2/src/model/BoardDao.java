@@ -1,10 +1,5 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,10 +36,23 @@ public class BoardDao {
 		return false;
 	}
 	
-	public int boardCount() {
+	public int boardCount(String column, String find) {
 		SqlSession session=MyBatisConnection.getConnection();
 		try {
-				return session.getMapper(cls).boardCount();
+			map.clear();
+			if(column!=null) {
+				String[] cols=column.split(",");
+				switch (cols.length) {
+				case 3:
+					map.put("col3", cols[2]);
+				case 2:
+					map.put("col2", cols[1]);
+				case 1:
+					map.put("col1",cols[0]);
+				}
+				map.put("find", find);
+			}
+				return session.getMapper(cls).boardCount(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -53,14 +61,24 @@ public class BoardDao {
 		return 0;
 	}
 	
-	public List<Board> list(int pageNum, int limit){
+	public List<Board> list(int pageNum, int limit, String column, String find){
 		SqlSession session=MyBatisConnection.getConnection();
-		String sql="";
 		try {
 			map.clear();
 			map.put("start", (pageNum-1) * limit);
 			map.put("limit", limit);
-			
+			if(column!=null) {
+				String[] cols=column.split(",");
+				switch (cols.length) {
+				case 3:
+					map.put("col3", cols[2]);
+				case 2:
+					map.put("col2", cols[1]);
+				case 1:
+					map.put("col1",cols[0]);
+				}
+				map.put("find", find);
+			}
 			return session.getMapper(cls).select(map);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -95,10 +113,7 @@ public class BoardDao {
 	public void grpStepAdd(int grp, int grpstep) {
 		SqlSession session=MyBatisConnection.getConnection();
 		try {
-			map.clear();
-			map.put("grp", grp);
-			map.put("grpstep", grpstep);
-			session.getMapper(cls).grpStepAdd(map);
+			session.getMapper(cls).grpStepAdd(grp,grpstep);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -120,8 +135,8 @@ public class BoardDao {
 	public boolean delete(int num) {
 		SqlSession session=MyBatisConnection.getConnection();
 		try {
-			session.getMapper(cls).delete(num);
-				return true;
+			int cnt=session.getMapper(cls).delete(num);
+				if(cnt>0) return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {

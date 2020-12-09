@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -19,11 +20,19 @@ public interface BoardMapper {
 			+ "values(#{num},#{name},#{pass},#{subject},#{content},#{file1},now(),0,#{grp},#{grplevel},#{grpstep})")
 	void insert(Board board);
 	
-	@Select("select count(*) from board")
-	int boardCount();
+	@Select({"<script>",
+			 "select count(*) from board ",
+			 "<if test='col1!=null'> where ${col1} like '%${find}%'</if>",
+			 "<if test='col2!=null'> or ${col2} like '%${find}%'</if>",
+			 "<if test='col3!=null'> or ${col3} like '%${find}%'</if>",
+			 "</script>"})
+	int boardCount(Map<String, Object> map);
 	
 	@Select({"<script>"
 			+ "select * from board"
+			+ "<if test='col1!=null'> where ${col1} like '%${find}%'</if>"
+			+ "<if test='col2!=null'> or ${col2} like '%${find}%'</if>"
+			+ "<if test='col3!=null'> or ${col3} like '%${find}%'</if>"
 			+ "<if test='num != null'>where num=#{num}</if>"
 			+ "<if test='start != null'>"
 			+ "order by grp desc, grpstep asc limit #{start},#{limit}</if>"
@@ -33,13 +42,16 @@ public interface BoardMapper {
 	@Update("update board set readcnt= readcnt+1 where num=#{num}")
 	void readcntAdd(int num);
 	
-	@Update("update board set grpstep = grpstep+1 where grp = #{grp} and grpstep > #{grpstep}")
-	void grpStepAdd(Map<String, Object> map);
+/*	@Update("update board set grpstep = grpstep+1 where grp = #{grp} and grpstep > #{grpstep}")
+	void grpStepAdd(Map<String, Object> map);*/
 	
 	@Update("update board set name=#{name}, subject=#{subject}, content=#{content}, file1=#{file1} where num=#{num}")
 	void update(Board board);
 
 	@Delete("delete from board where num=#{num}")
-	void delete(int num);
+	int delete(int num);
+
+	void grpStepAdd
+	(@Param("grp")int grp,@Param("grpstep") int grpstep);
 	
 }

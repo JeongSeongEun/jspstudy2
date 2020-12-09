@@ -6,8 +6,12 @@
     <decorator name="board" page="boardlayout.jsp">
         <pattern>/model2/board/*</pattern>
     </decorator> -->
-    <decorator name="member" page="layout.jsp">
-        <pattern>/model2/*</pattern>
+    <decorator name="member" page="memberlayout.jsp">
+        <pattern>/model2/member/*</pattern>
+        <pattern>/model2/chat/*</pattern>
+    </decorator>
+     <decorator name="board" page="boardlayout.jsp">
+        <pattern>/model2/board/*</pattern>
     </decorator>
     <!-- sitiemsh의 layout설정 안함 -->
     <excludes>
@@ -15,5 +19,6 @@
     <pattern>/model2/member/pw*</pattern>
     <pattern>/model2/member/picture*</pattern>
     <pattern>/model2/member/password*</pattern>
+    <pattern>/model2/board/imgupload*</pattern>
     </excludes>
 </decorators>

@@ -71,10 +71,19 @@ public class BoardAction {
 			pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		} catch (NumberFormatException e) {
 		}
+		String column=request.getParameter("column");
+		String find=request.getParameter("find");
+		if(column == null || column.trim().equals("")) {
+			column=null;
+			find=null;
+		}
+		if(find == null || find.trim().equals("")) {
+			column=null;
+			find=null;
+		}
 		int limit = 10;
-
-		int boardcount = dao.boardCount();
-		List<Board> list = dao.list(pageNum, limit);
+		int boardcount = dao.boardCount(column,find); //전체등록게시물 개수
+		List<Board> list = dao.list(pageNum, limit,column,find);
 		int maxpage = (int) ((double) boardcount / limit + 0.95);
 		int startpage = ((int) (pageNum / 10.0 + 0.9) - 1) * 10 + 1;
 		int endpage = startpage + 9;
@@ -206,5 +215,16 @@ public class BoardAction {
 		request.setAttribute("msg", msg);
 		request.setAttribute("url", url);
 		return new ActionForward(false, "../alert.jsp");
+	}
+	public ActionForward imgupload(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String path=request.getServletContext().getRealPath("/")+"model2/board/imgfile/";
+		File f= new File(path);
+		if(!f.exists())
+			f.mkdir();
+		MultipartRequest multi=new MultipartRequest(request, path, 10*1024*1024,"UTF-8");
+		String fileName=multi.getFilesystemName("upload");
+		request.setAttribute("fileName", fileName);
+		request.setAttribute("CKEditorFuncNum", request.getParameter("CKEditorFuncNum"));
+		return new ActionForward(false,"ckeditor.jsp");
 	}
 }

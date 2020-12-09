@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="../../css/main.css">
 </head>
 <body>
-<table>
+<table class="w3-table-all">
 <caption>게시글 상세보기</caption>
  <tr>
         <th width="20%">글쓴이</th>

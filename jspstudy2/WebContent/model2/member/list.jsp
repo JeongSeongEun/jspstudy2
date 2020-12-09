@@ -17,10 +17,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원관리</title>
-<link rel="stylesheet" href="../../css/main.css">
+<script type="text/javascript">
+function allchkbox(chk) {
+	var allchk=chk.checked //전체 선택값, true, false
+	//getElementsByName(name): name 속성의 값이 "mailchk"인 태그들. 배열
+	//<input name="mailchk" ...>
+	document.getElementsByName("mailchk").forEach
+	(function(item,index) {
+		//item: name="mailchk"인 태그 한개
+		if(allchk) //전체선택 true
+			item.setAttribute("checked",true);
+		else //전체선택  false
+			item.removeAttribute("checked");
+	})
+}
+</script>
+<!-- <link rel="stylesheet" href="../../css/main.css"> -->
 </head>
 <body>
-	<table>
+<form action="mailform.me" method="post">
+	<table class="w3-table-all w3-border">
 		<caption>회원 목록</caption>
 		<tr>
 			<th>아이디</th>
@@ -28,7 +44,9 @@
 			<th>이름</th>
 			<th>성별</th>
 			<th>전화</th>
+			<th>이메일</th>
 			<th>&nbsp;</th>
+			<th><input type="checkbox" name="allchk" onchange="allchkbox(this)"></th>
 		</tr>
 		<c:forEach var="m" items="${list}">
 		<tr>
@@ -38,13 +56,18 @@
 			<td>${m.name }</td>
 			<td>${m.gender==1?"남":"여" }</td>
 			<td>${m.tel }</td>
+			<td>${m.email }</td>
 			<td><a href="updateForm.me?id=${m.id }">[수정]</a> 
  	<c:if test="${m.id != 'admin'}">
  <a href="deleteForm.me?id=${m.id }">[강제탈퇴]</a>
  </c:if>
  	</td>
+ 	<td><input type="checkbox" name="mailchk" value="${m.email}"></td>
 		</tr>
 		</c:forEach>
+		<tr><td colspan="8" align="center">
+		<input type="submit" value="메일전송"></td></tr>
 	</table>
+	</form>
 </body>
 </html>
